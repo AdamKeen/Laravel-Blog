@@ -1,5 +1,8 @@
 <?php
 
+use App\Posts;
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,34 +29,34 @@ Route::get('/admin', function () {
 
   return view('admin/home');
 
-});
+})->middleware('auth');
 
 Route::get('/admin/posts', function () {
 
   return view('admin/posts');
 
-});
+})->middleware('auth');
 
 Route::get('/admin/posts/new', function () {
 
   return view('admin/new-post');
 
-});
+})->middleware('auth');
 
 Route::get('/admin/posts/create', function () {
 
   // Post creation logic
 
-});
+})->middleware('auth');
 
 Route::get('/admin/posts/edit/{post}', function () {
 
   return view('admin/edit-post');
 
-});
+})->middleware('auth');
 
 Route::get('/admin/posts/delete/{post}', function () {
 
   // Delete logic
 
-});
+})->middleware('auth');

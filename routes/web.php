@@ -12,9 +12,48 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+// Admin Routes
+
+Route::get('/admin', function () {
+
+  return view('admin/home');
+
+});
+
+Route::get('/admin/posts', function () {
+
+  return view('admin/posts');
+
+});
+
+Route::get('/admin/posts/new', function () {
+
+  return view('admin/new-post');
+
+});
+
+Route::get('/admin/posts/create', function () {
+
+  // Post creation logic
+
+});
+
+Route::get('/admin/posts/edit/{post}', function () {
+
+  return view('admin/edit-post');
+
+});
+
+Route::get('/admin/posts/delete/{post}', function () {
+
+  // Delete logic
+
+});

@@ -1,6 +1,6 @@
 <?php
 
-use App\Posts;
+use App\Post;
 use Illuminate\Http\Request;
 
 /*
@@ -15,7 +15,13 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('home');
+
+  $posts = Post::orderBy('created_at', 'asc')->get();
+
+  return view('home', [
+      'posts' => $posts,
+  ]);
+
 });
 
 Auth::routes();

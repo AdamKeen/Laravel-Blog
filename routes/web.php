@@ -39,7 +39,11 @@ Route::get('/admin', function () {
 
 Route::get('/admin/posts', function () {
 
-  return view('admin/posts');
+  $posts = Post::orderBy('created_at', 'asc')->get();
+
+  return view('admin/posts', [
+      'posts' => $posts,
+  ]);
 
 })->middleware('auth');
 
@@ -49,20 +53,45 @@ Route::get('/admin/posts/new', function () {
 
 })->middleware('auth');
 
-Route::get('/admin/posts/create', function () {
+Route::post('/admin/posts/create', function (Request $request) {
 
-  // Post creation logic
+  $validator = Validator::make($request->all(), [
+    'title' => 'required|max:255',
+    'description' => 'required|max:255',
+    'slug' => 'required|max:100',
+    'author' => 'required|max:50',
+    'content' => 'required',
+  ]);
+
+  if ($validator->fails()) {
+      return redirect('/')
+          ->withInput()
+          ->withErrors($validator);
+  }
+
+  $post = new post;
+  $post->title = $request->title;
+  $post->description = $request->description;
+  $post->slug = $request->slug;
+  $post->author = $request->author;
+  $post->content = $request->content;
+  $post->save();
+
+  return redirect('/admin/posts');
 
 })->middleware('auth');
 
-Route::get('/admin/posts/edit/{post}', function () {
+Route::get('/admin/posts/edit/{post}', function (Post $post) {
 
-  return view('admin/edit-post');
+  return view('admin/edit-post', [
+			'post' => $post,
+	]);
 
 })->middleware('auth');
 
-Route::get('/admin/posts/delete/{post}', function () {
+Route::delete('/admin/posts/delete/{post}', function (Post $post) {
 
-  // Delete logic
+  $post->delete();
+	return redirect('/admin/posts');
 
 })->middleware('auth');

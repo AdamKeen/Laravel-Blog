@@ -5,21 +5,12 @@
 
   @foreach ($posts as $post)
 
-  <div style="background-color: white; margin-bottom: 10px; padding: 10px;" class="row">
+  <div style="background-color: white; margin-bottom: 10px; padding: 10px;" id="{{ $post->id }}" class="post">
 
-    <div class="col">
+    <h1> <a href="#{{ $post->id }}"> {{ $post->title }} </a> </h1>
+    <h4> Written by {{ $post->author }} </h4>
 
-      <h1> <a href="/{{ $post->slug }}"> {{ $post->title }} </a> </h1>
-
-      <h3> Written by {{ $post->author }}. </h3>
-
-    </div>
-
-    <div class="col">
-
-      <p> {{ $post->description }} </p>
-
-    </div>
+    {!! $post->content !!}
 
   </div>
 
